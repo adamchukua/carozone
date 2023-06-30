@@ -9,13 +9,35 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 
 const CARS_PER_PAGE = 10;
+
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 export default function CarTable() {
   const [cars, setCars] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+
+  const [editModalOpen, setEditModalOpen] = React.useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
 
   useEffect(() => {
     axios.get("https://myfakeapi.com/api/cars/")
@@ -32,6 +54,24 @@ export default function CarTable() {
     setCurrentPage(page);
   };
 
+  const handleActionSelect = (event, id) => {
+    const action = event.target.value;
+    
+    switch (action) {
+      case "edit":
+        handleEditModalOpen();
+        break;
+      case "delete":
+        handleDeleteModalOpen();
+        break;
+    }
+  };
+
+  const handleEditModalOpen = () => setEditModalOpen(true);
+  const handleEditModalClose = () => setEditModalOpen(false);
+  const handleDeleteModalOpen = () => setDeleteModalOpen(true);
+  const handleDeleteModalClose = () => setDeleteModalOpen(false);
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -39,13 +79,13 @@ export default function CarTable() {
           <TableHead>
             <TableRow>
               <TableCell>Company</TableCell>
-              <TableCell align="right">Model</TableCell>
-              <TableCell align="right">VIN</TableCell>
-              <TableCell align="right">Color</TableCell>
-              <TableCell align="right">Year</TableCell>
-              <TableCell align="right">Price</TableCell>
-              <TableCell align="right">Availability</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              <TableCell>Model</TableCell>
+              <TableCell>VIN</TableCell>
+              <TableCell>Color</TableCell>
+              <TableCell>Year</TableCell>
+              <TableCell>Price</TableCell>
+              <TableCell>Availability</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -55,13 +95,27 @@ export default function CarTable() {
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">{row.car}</TableCell>
-                <TableCell align="right">{row.car_model}</TableCell>
-                <TableCell align="right">{row.car_vin}</TableCell>
-                <TableCell align="right">{row.car_color}</TableCell>
-                <TableCell align="right">{row.car_model_year}</TableCell>
-                <TableCell align="right">{row.price}</TableCell>
-                <TableCell align="right">{row.availability}</TableCell>
-                <TableCell align="right">Edit Delete</TableCell>
+                <TableCell>{row.car_model}</TableCell>
+                <TableCell>{row.car_vin}</TableCell>
+                <TableCell>{row.car_color}</TableCell>
+                <TableCell>{row.car_model_year}</TableCell>
+                <TableCell>{row.price}</TableCell>
+                <TableCell>{row.availability}</TableCell>
+                <TableCell>
+                  <FormControl fullWidth>
+                    <InputLabel>Action</InputLabel>
+                    
+                    <Select
+                      value={row.id}
+                      label="Action"
+                      defaultValue=""
+                      onChange={(event) => handleActionSelect(event, row.id)}
+                    >
+                      <MenuItem value="edit">Edit</MenuItem>
+                      <MenuItem value="delete">Delete</MenuItem>
+                    </Select>
+                  </FormControl>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -75,6 +129,38 @@ export default function CarTable() {
           onChange={handlePageChange}
         />
       </Stack>
+
+      <Modal
+        open={editModalOpen}
+        onClose={handleEditModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Text in a modal
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          </Typography>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={deleteModalOpen}
+        onClose={handleDeleteModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Text in a modal
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          </Typography>
+        </Box>
+      </Modal>
     </>
   )
 }
