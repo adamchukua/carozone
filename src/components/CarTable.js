@@ -15,6 +15,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import EditCarModal from "./EditCarModal";
 import DeleteCarModal from "./DeleteCarModal";
+import CheckCircle from '@mui/icons-material/CheckCircle';
+import RemoveCircle from '@mui/icons-material/RemoveCircle';
 import { useCarContext } from "./CarContext";
 
 const CARS_PER_PAGE = 10;
@@ -84,7 +86,7 @@ export default function CarTable() {
                 <TableCell>{row.car_color}</TableCell>
                 <TableCell>{row.car_model_year}</TableCell>
                 <TableCell>{row.price}</TableCell>
-                <TableCell>{row.availability}</TableCell>
+                <TableCell>{row.availability ? <CheckCircle/> : <RemoveCircle/>}</TableCell>
                 <TableCell>
                   <FormControl fullWidth>
                     <InputLabel>Action</InputLabel>
