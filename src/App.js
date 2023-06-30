@@ -1,10 +1,13 @@
+import { CarProvider } from './components/CarContext';
 import CarTable from './components/CarTable';
 import Layout from './components/Layout';
 
 function App() {
   return (
     <Layout>
-      <CarTable />
+      <CarProvider>
+        <CarTable />
+      </CarProvider>
     </Layout>
   );
 }

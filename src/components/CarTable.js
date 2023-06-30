@@ -13,36 +13,17 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import EditCarModal from "./EditCarModal";
+import DeleteCarModal from "./DeleteCarModal";
+import { useCarContext } from "./CarContext";
 
 const CARS_PER_PAGE = 10;
-
-const modalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
 
 export default function CarTable() {
   const [cars, setCars] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
-  const [editModalOpen, setEditModalOpen] = React.useState(false);
-  const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
-
-  const [editedCar, setEditedCar] = useState({});
-  const [deletedCar, setDeletedCar] = useState({});
+  const { handleEditModalOpen, setEditedCar, handleDeleteModalOpen, setDeletedCar } = useCarContext();
 
   useEffect(() => {
     axios.get("https://myfakeapi.com/api/cars/")
@@ -73,23 +54,6 @@ export default function CarTable() {
         setDeletedCar(car);
         break;
     }
-  };
-
-  const handleEditModalOpen = () => setEditModalOpen(true);
-  const handleEditModalClose = () => setEditModalOpen(false);
-  const handleDeleteModalOpen = () => setDeleteModalOpen(true);
-  const handleDeleteModalClose = () => setDeleteModalOpen(false);
-
-  const handleCarChange = (event) => {
-    const { name, value } = event.target;
-    setEditedCar((prevCar) => ({
-      ...prevCar,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
   };
 
   return (
@@ -150,95 +114,8 @@ export default function CarTable() {
         />
       </Stack>
 
-      <Modal
-        open={editModalOpen}
-        onClose={handleEditModalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={modalStyle}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Edit {editedCar.car} {editedCar.car_model}
-          </Typography>
-
-          <form onSubmit={handleSubmit}>
-            <Stack spacing={2}>
-              <TextField
-                name="company"
-                label="Company"
-                value={editedCar.car}
-                onChange={handleCarChange}
-                disabled
-              />
-              <TextField
-                name="model"
-                label="Model"
-                value={editedCar.car_model}
-                onChange={handleCarChange}
-                disabled
-              />
-              <TextField
-                name="VIN"
-                label="VIN"
-                value={editedCar.car_vin}
-                onChange={handleCarChange}
-                disabled
-              />
-              <TextField
-                name="year"
-                label="Year"
-                value={editedCar.car_model_year}
-                onChange={handleCarChange}
-                disabled
-              />
-              <TextField
-                name="color"
-                label="Color"
-                value={editedCar.car_color}
-                onChange={handleCarChange}
-              />
-              <TextField
-                name="price"
-                label="Price"
-                value={editedCar.price}
-                onChange={handleCarChange}
-              />
-              <TextField
-                name="availability"
-                label="Availability"
-                value={editedCar.availability}
-                onChange={handleCarChange}
-              />
-              <Stack direction="row" spacing={2}>
-                <Button type="submit" variant="contained">Save</Button>
-                <Button type="button" variant="outlined" onClick={handleEditModalClose}>Cancel</Button>
-              </Stack>
-            </Stack>
-          </form>
-        </Box>
-      </Modal>
-
-      <Modal
-        open={deleteModalOpen}
-        onClose={handleDeleteModalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={modalStyle}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Do you really want to delete {deletedCar.car} {deletedCar.car_model} (VIM: {deletedCar.car_vin})?
-          </Typography>
-
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            This action cannot be undone!
-          </Typography>
-
-          <Stack direction="row" spacing={2}>
-            <Button type="submit" variant="contained">Delete</Button>
-            <Button type="button" variant="outlined" onClick={handleDeleteModalClose}>Cancel</Button>
-          </Stack>
-        </Box>
-      </Modal>
+      <EditCarModal />
+      <DeleteCarModal />
     </>
   )
 }
