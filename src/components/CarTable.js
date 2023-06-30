@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -19,24 +18,16 @@ import CheckCircle from '@mui/icons-material/CheckCircle';
 import RemoveCircle from '@mui/icons-material/RemoveCircle';
 import { useCarContext } from "./CarContext";
 
-const CARS_PER_PAGE = 10;
+export const CARS_PER_PAGE = 10;
 
 export default function CarTable() {
-  const [cars, setCars] = useState([]);
+  const { handleEditModalOpen, setEditedCar, handleDeleteModalOpen, setDeletedCar, cars } = useCarContext();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const { handleEditModalOpen, setEditedCar, handleDeleteModalOpen, setDeletedCar } = useCarContext();
 
   useEffect(() => {
-    axios.get("https://myfakeapi.com/api/cars/")
-      .then(response => {
-        setCars(response.data.cars);
-        setTotalPages(Math.ceil(response.data.cars.length / CARS_PER_PAGE));
-      })
-      .catch(error => {
-        console.error("Error fetching cars: ", error);
-      });
-  }, []);
+    setTotalPages(Math.ceil(cars.length / CARS_PER_PAGE));
+  }, [cars]);
 
   const handlePageChange = (event, page) => {
     setCurrentPage(page);

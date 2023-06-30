@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { createContext, useContext } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
+import axios from "axios";
 
 const CarContext = createContext();
 
@@ -8,6 +8,8 @@ export function useCarContext() {
 }
 
 export function CarProvider({ children }) {
+  const [cars, setCars] = useState([]);
+
   const [editModalOpen, setEditModalOpen] = React.useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
 
@@ -18,6 +20,16 @@ export function CarProvider({ children }) {
   const handleEditModalClose = () => setEditModalOpen(false);
   const handleDeleteModalOpen = () => setDeleteModalOpen(true);
   const handleDeleteModalClose = () => setDeleteModalOpen(false);
+
+  useEffect(() => {
+    axios.get("https://myfakeapi.com/api/cars/")
+      .then(response => {
+        setCars(response.data.cars);
+      })
+      .catch(error => {
+        console.error("Error fetching cars: ", error);
+      });
+  }, []);
 
   const handleCarChange = (event) => {
     const { name, value } = event.target;
@@ -43,7 +55,9 @@ export function CarProvider({ children }) {
     handleDeleteModalClose,
     deletedCar,
     setEditedCar,
-    setDeletedCar
+    setDeletedCar,
+    cars,
+    setCars
   };
 
   return (

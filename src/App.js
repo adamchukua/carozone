@@ -4,11 +4,11 @@ import Layout from './components/Layout';
 
 function App() {
   return (
-    <Layout>
-      <CarProvider>
+    <CarProvider>
+      <Layout>
         <CarTable />
-      </CarProvider>
-    </Layout>
+      </Layout>
+    </CarProvider>
   );
 }
 
