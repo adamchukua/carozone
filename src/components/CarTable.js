@@ -8,19 +8,29 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+
+const CARS_PER_PAGE = 10;
 
 export default function CarTable() {
   const [cars, setCars] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     axios.get("https://myfakeapi.com/api/cars/")
       .then(response => {
         setCars(response.data.cars);
+        setTotalPages(Math.ceil(response.data.cars.length / CARS_PER_PAGE));
       })
       .catch(error => {
         console.error("Error fetching cars: ", error);
       });
   }, []);
+
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <>
@@ -39,7 +49,7 @@ export default function CarTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-          {cars.map((row) => (
+            {cars.slice((currentPage - 1) * CARS_PER_PAGE, currentPage * CARS_PER_PAGE).map((row) => (
               <TableRow
                 key={row.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -58,7 +68,13 @@ export default function CarTable() {
         </Table>
       </TableContainer>
 
-      <Pagination count={10} />
+      <Stack spacing={2} direction="row" justifyContent="center" sx={{ mt: 2 }}>
+        <Pagination 
+          count={totalPages}
+          page={currentPage}
+          onChange={handlePageChange}
+        />
+      </Stack>
     </>
   )
 }
