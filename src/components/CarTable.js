@@ -42,6 +42,7 @@ export default function CarTable() {
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
 
   const [editedCar, setEditedCar] = useState({});
+  const [deletedCar, setDeletedCar] = useState({});
 
   useEffect(() => {
     axios.get("https://myfakeapi.com/api/cars/")
@@ -60,15 +61,16 @@ export default function CarTable() {
 
   const handleActionSelect = (event, id) => {
     const action = event.target.value;
+    const car = cars.filter(car => car.id === id)[0];
     
     switch (action) {
       case "edit":
         handleEditModalOpen();
-        setEditedCar(cars.filter(car => car.id === id)[0]);
-        console.log(cars.filter(car => car.id === id));
+        setEditedCar(car);
         break;
       case "delete":
         handleDeleteModalOpen();
+        setDeletedCar(car);
         break;
     }
   };
@@ -224,11 +226,17 @@ export default function CarTable() {
       >
         <Box sx={modalStyle}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+            Do you really want to delete {deletedCar.car} {deletedCar.car_model} (VIM: {deletedCar.car_vin})?
           </Typography>
+
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            This action cannot be undone!
           </Typography>
+
+          <Stack direction="row" spacing={2}>
+            <Button type="submit" variant="contained">Delete</Button>
+            <Button type="button" variant="outlined" onClick={handleDeleteModalClose}>Cancel</Button>
+          </Stack>
         </Box>
       </Modal>
     </>
