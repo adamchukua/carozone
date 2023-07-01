@@ -62,6 +62,15 @@ export function CarProvider({ children }) {
 
   const handleEditCarSubmit = (event) => {
     event.preventDefault();
+
+    const car = cars.findIndex(car => car.id === editedCar.id);
+    cars[car] = editedCar;
+    localStorage.setItem('cars', JSON.stringify(cars));
+
+    setMessageText(`Car ${editedCar.car} ${editedCar.car_model} updated`);
+    setMessageOpen(true);
+
+    handleEditModalClose();
   };
 
   const handleDeleteCarSubmit = (event, deletedCar) => {
@@ -70,6 +79,7 @@ export function CarProvider({ children }) {
     let newCars = cars.filter(car => car.id !== deletedCar.id);
     setCars(newCars);
     localStorage.setItem('cars', JSON.stringify(newCars));
+
     setMessageText(`Car ${deletedCar.car} ${deletedCar.car_model} deleted`);
     setMessageOpen(true);
 

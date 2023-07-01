@@ -5,6 +5,10 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import { useCarContext } from './CarContext';
 
 const modalStyle = {
@@ -65,7 +69,7 @@ export default function EditCarModal() {
                 disabled
               />
               <TextField
-                name="color"
+                name="car_color"
                 label="Color"
                 value={editedCar.car_color}
                 onChange={handleCarChange}
@@ -76,12 +80,18 @@ export default function EditCarModal() {
                 value={editedCar.price}
                 onChange={handleCarChange}
               />
-              <TextField
-                name="availability"
-                label="Availability"
-                value={editedCar.availability}
-                onChange={handleCarChange}
-              />
+              <FormControl fullWidth>
+                <InputLabel>Availability</InputLabel>
+                <Select
+                  name="availability"
+                  onChange={handleCarChange}
+                  label="Availability"
+                  defaultValue={editedCar.availability ? 1 : 0}
+                >
+                  <MenuItem value={1}>In Stock</MenuItem>
+                  <MenuItem value={0}>Out of Stock</MenuItem>
+                </Select>
+              </FormControl>
               <Stack direction="row" spacing={2}>
                 <Button type="submit" variant="contained">Save</Button>
                 <Button type="button" variant="outlined" onClick={handleEditModalClose}>Cancel</Button>
