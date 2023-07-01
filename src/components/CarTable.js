@@ -62,7 +62,7 @@ export default function CarTable() {
               <TableCell>Year</TableCell>
               <TableCell>Price</TableCell>
               <TableCell>Availability</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell width={80}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -85,7 +85,6 @@ export default function CarTable() {
                     <Select
                       value={row.id}
                       label="Action"
-                      defaultValue=""
                       onChange={(event) => handleActionSelect(event, row.id)}
                     >
                       <MenuItem value="edit">Edit</MenuItem>

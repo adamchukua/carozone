@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -6,6 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import { useCarContext } from "./CarContext";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -49,6 +50,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
+  const { search } = useCarContext();
+
+  const handleChange = (event) => {
+    //setSearchValue(event.target.value);
+    search(event.target.value);
+  };
+
   return (
     <Box sx={{ flexGrow: 1, mb: 3 }}>
       <AppBar position="static">
@@ -68,6 +76,7 @@ export default function Header() {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={handleChange}
             />
           </Search>
         </Toolbar>

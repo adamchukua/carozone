@@ -10,8 +10,8 @@ export function useCarContext() {
 export function CarProvider({ children }) {
   const [cars, setCars] = useState([]);
 
-  const [editModalOpen, setEditModalOpen] = React.useState(false);
-  const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const [editedCar, setEditedCar] = useState({});
   const [deletedCar, setDeletedCar] = useState({});
@@ -22,14 +22,25 @@ export function CarProvider({ children }) {
   const handleDeleteModalClose = () => setDeleteModalOpen(false);
 
   useEffect(() => {
+    const storedCars = localStorage.getItem('cars');
+    if (storedCars) {
+      setCars(JSON.parse(storedCars));
+    } else {
+      fetchCars();
+    }
+  }, []);
+
+  const fetchCars = () => {
     axios.get("https://myfakeapi.com/api/cars/")
       .then(response => {
-        setCars(response.data.cars);
+        const fetchedCars = response.data.cars;
+        setCars(fetchedCars);
+        localStorage.setItem('cars', JSON.stringify(fetchedCars));
       })
       .catch(error => {
         console.error("Error fetching cars: ", error);
       });
-  }, []);
+  };
 
   const handleCarChange = (event) => {
     const { name, value } = event.target;
@@ -41,6 +52,17 @@ export function CarProvider({ children }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+  };
+
+  const search = (query) => {
+    const storedCars = localStorage.getItem('cars');
+    if (storedCars) {
+      const parsedCars = JSON.parse(storedCars);
+      setCars(parsedCars.filter(car => 
+        car.car.includes(query) ||
+        car.car_model.includes(query) ||
+        car.car_vin.includes(query)));
+    }
   };
 
   const carContextValue = {
@@ -57,7 +79,8 @@ export function CarProvider({ children }) {
     setEditedCar,
     setDeletedCar,
     cars,
-    setCars
+    setCars,
+    search
   };
 
   return (
