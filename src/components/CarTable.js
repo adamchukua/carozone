@@ -17,6 +17,7 @@ import DeleteCarModal from "./DeleteCarModal";
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import RemoveCircle from '@mui/icons-material/RemoveCircle';
 import { useCarContext } from "./CarContext";
+import { Button, Typography } from "@mui/material";
 
 export const CARS_PER_PAGE = 10;
 
@@ -51,6 +52,11 @@ export default function CarTable() {
 
   return (
     <>
+      <Stack spacing={2} direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 2 }}>
+        <Typography>Founded cars: {cars.length}</Typography>
+        <Button type="submit" variant="contained">Add car</Button>
+      </Stack>
+
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
