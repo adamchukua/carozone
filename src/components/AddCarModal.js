@@ -19,72 +19,54 @@ const modalStyle = {
   p: 4,
 };
 
-export default function EditCarModal() {
-  const { editModalOpen, editedCar, handleEditModalClose, handleCarChange, handleEditCarSubmit } = useCarContext();
+export default function AddCarModal() {
+  const { addModalOpen, handleAddModalClose, handleAddCarSubmit } = useCarContext();
 
   return (
     <Modal
-      open={editModalOpen}
-      onClose={handleEditModalClose}
+      open={addModalOpen}
+      onClose={handleAddModalClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
       <Box sx={modalStyle}>
         <Typography id="modal-modal-title" variant="h6" component="h2">
-          Edit {editedCar.car} {editedCar.car_model}
+          Add car
         </Typography>
 
-        <form onSubmit={handleEditCarSubmit}>
+        <form onSubmit={handleAddCarSubmit}>
             <Stack spacing={2}>
               <TextField
                 name="company"
                 label="Company"
-                value={editedCar.car}
-                onChange={handleCarChange}
-                disabled
               />
               <TextField
                 name="model"
                 label="Model"
-                value={editedCar.car_model}
-                onChange={handleCarChange}
-                disabled
               />
               <TextField
                 name="VIN"
                 label="VIN"
-                value={editedCar.car_vin}
-                onChange={handleCarChange}
-                disabled
               />
               <TextField
                 name="year"
                 label="Year"
-                value={editedCar.car_model_year}
-                onChange={handleCarChange}
-                disabled
               />
               <TextField
                 name="color"
                 label="Color"
-                value={editedCar.car_color}
-                onChange={handleCarChange}
               />
               <TextField
                 name="price"
                 label="Price"
-                value={editedCar.price}
-                onChange={handleCarChange}
               />
               <TextField
                 name="availability"
                 label="Availability"
-                value={editedCar.availability}
-                onChange={handleCarChange}
               />
               <Stack direction="row" spacing={2}>
-                <Button type="submit" variant="contained">Save</Button>
-                <Button type="button" variant="outlined" onClick={handleEditModalClose}>Cancel</Button>
+                <Button type="submit" variant="contained">Add</Button>
+                <Button type="button" variant="outlined" onClick={handleAddModalClose}>Cancel</Button>
               </Stack>
             </Stack>
           </form>

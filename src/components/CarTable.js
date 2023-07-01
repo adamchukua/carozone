@@ -18,11 +18,12 @@ import CheckCircle from '@mui/icons-material/CheckCircle';
 import RemoveCircle from '@mui/icons-material/RemoveCircle';
 import { useCarContext } from "./CarContext";
 import { Button, Typography } from "@mui/material";
+import AddCarModal from "./AddCarModal";
 
 export const CARS_PER_PAGE = 10;
 
 export default function CarTable() {
-  const { handleEditModalOpen, setEditedCar, handleDeleteModalOpen, setDeletedCar, cars } = useCarContext();
+  const { handleEditModalOpen, setEditedCar, handleDeleteModalOpen, handleAddModalOpen, setDeletedCar, cars } = useCarContext();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -54,7 +55,7 @@ export default function CarTable() {
     <>
       <Stack spacing={2} direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 2 }}>
         <Typography>Founded cars: {cars.length}</Typography>
-        <Button type="submit" variant="contained">Add car</Button>
+        <Button onClick={() => handleAddModalOpen()} variant="contained">Add car</Button>
       </Stack>
 
       <TableContainer component={Paper}>
@@ -114,6 +115,7 @@ export default function CarTable() {
 
       <EditCarModal />
       <DeleteCarModal />
+      <AddCarModal />
     </>
   )
 }

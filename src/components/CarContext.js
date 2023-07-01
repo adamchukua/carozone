@@ -12,6 +12,7 @@ export function CarProvider({ children }) {
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [addModalOpen, setAddModalOpen] = useState(false);
 
   const [editedCar, setEditedCar] = useState({});
   const [deletedCar, setDeletedCar] = useState({});
@@ -20,6 +21,8 @@ export function CarProvider({ children }) {
   const handleEditModalClose = () => setEditModalOpen(false);
   const handleDeleteModalOpen = () => setDeleteModalOpen(true);
   const handleDeleteModalClose = () => setDeleteModalOpen(false);
+  const handleAddModalOpen = () => setAddModalOpen(true);
+  const handleAddModalClose = () => setAddModalOpen(false);
 
   useEffect(() => {
     const storedCars = localStorage.getItem('cars');
@@ -50,7 +53,11 @@ export function CarProvider({ children }) {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleEditCarSubmit = (event) => {
+    event.preventDefault();
+  };
+
+  const handleAddCarSubmit = (event) => {
     event.preventDefault();
   };
 
@@ -66,21 +73,28 @@ export function CarProvider({ children }) {
   };
 
   const carContextValue = {
-    editModalOpen,
-    handleEditModalOpen,
-    handleEditModalClose,
-    editedCar,
-    handleCarChange,
-    handleSubmit,
-    deleteModalOpen,
-    handleDeleteModalOpen,
-    handleDeleteModalClose,
-    deletedCar,
-    setEditedCar,
-    setDeletedCar,
     cars,
     setCars,
-    search
+    search,
+
+    handleEditModalOpen,
+    handleEditModalClose,
+    handleCarChange,
+    setEditedCar,
+    handleEditCarSubmit,
+    editModalOpen,
+    editedCar,
+
+    handleDeleteModalOpen,
+    handleDeleteModalClose,
+    setDeletedCar,
+    deleteModalOpen,
+    deletedCar,
+
+    handleAddModalOpen,
+    handleAddModalClose,
+    handleAddCarSubmit,
+    addModalOpen,
   };
 
   return (

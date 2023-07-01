@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -53,7 +53,6 @@ export default function Header() {
   const { search } = useCarContext();
 
   const handleChange = (event) => {
-    //setSearchValue(event.target.value);
     search(event.target.value);
   };
 
