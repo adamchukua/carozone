@@ -18,6 +18,7 @@ export function CarProvider({ children }) {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
 
+  const [addedCar, setAddedCar] = useState({});
   const [editedCar, setEditedCar] = useState({});
   const [deletedCar, setDeletedCar] = useState({});
 
@@ -60,6 +61,26 @@ export function CarProvider({ children }) {
     }));
   };
 
+  const handleCarAdd = (event) => {
+    const { name, value } = event.target;
+    setAddedCar((newCar) => ({
+      ...newCar,
+      [name]: value,
+    }));
+  };
+
+  const handleAddCarSubmit = (event) => {
+    event.preventDefault();
+
+    setCars([addedCar, ...cars]);
+    localStorage.setItem('cars', JSON.stringify([addedCar, ...cars]));
+
+    setMessageText(`Car ${addedCar.car} ${addedCar.car_model} added`);
+    setMessageOpen(true);
+
+    handleAddModalClose();
+  };
+
   const handleEditCarSubmit = (event) => {
     event.preventDefault();
 
@@ -84,10 +105,6 @@ export function CarProvider({ children }) {
     setMessageOpen(true);
 
     handleDeleteModalClose();
-  };
-
-  const handleAddCarSubmit = (event) => {
-    event.preventDefault();
   };
 
   const search = (query) => {
@@ -145,6 +162,7 @@ export function CarProvider({ children }) {
     handleAddModalOpen,
     handleAddModalClose,
     handleAddCarSubmit,
+    handleCarAdd,
     addModalOpen,
   };
 

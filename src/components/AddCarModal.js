@@ -5,6 +5,10 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import { useCarContext } from './CarContext';
 
 const modalStyle = {
@@ -20,7 +24,7 @@ const modalStyle = {
 };
 
 export default function AddCarModal() {
-  const { addModalOpen, handleAddModalClose, handleAddCarSubmit } = useCarContext();
+  const { addModalOpen, handleAddModalClose, handleAddCarSubmit, handleCarAdd } = useCarContext();
 
   return (
     <Modal
@@ -37,33 +41,53 @@ export default function AddCarModal() {
         <form onSubmit={handleAddCarSubmit}>
             <Stack spacing={2}>
               <TextField
-                name="company"
+                name="car"
                 label="Company"
+                onChange={handleCarAdd}
+                required
               />
               <TextField
-                name="model"
+                name="car_model"
                 label="Model"
+                onChange={handleCarAdd}
+                required
               />
               <TextField
-                name="VIN"
+                name="car_vin"
                 label="VIN"
+                onChange={handleCarAdd}
+                required
               />
               <TextField
-                name="year"
+                name="car_model_year"
                 label="Year"
+                onChange={handleCarAdd}
+                required
               />
               <TextField
-                name="color"
+                name="car_color"
                 label="Color"
+                onChange={handleCarAdd}
+                required
               />
               <TextField
                 name="price"
                 label="Price"
+                onChange={handleCarAdd}
+                required
               />
-              <TextField
-                name="availability"
-                label="Availability"
-              />
+              <FormControl fullWidth>
+                <InputLabel>Availability</InputLabel>
+                <Select
+                  name="availability"
+                  label="Availability"
+                  onChange={handleCarAdd}
+                  required
+                >
+                  <MenuItem value={1}>In Stock</MenuItem>
+                  <MenuItem value={0}>Out of Stock</MenuItem>
+                </Select>
+              </FormControl>
               <Stack direction="row" spacing={2}>
                 <Button type="submit" variant="contained">Add</Button>
                 <Button type="button" variant="outlined" onClick={handleAddModalClose}>Cancel</Button>
