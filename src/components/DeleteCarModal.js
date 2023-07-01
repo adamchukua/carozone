@@ -19,29 +19,31 @@ const modalStyle = {
 };
 
 export default function DeleteCarModal() {
-  const { deleteModalOpen, deletedCar, handleDeleteModalClose } = useCarContext();
+  const { deleteModalOpen, deletedCar, handleDeleteModalClose, handleDeleteCarSubmit } = useCarContext();
 
   return (
-    <Modal
+    <>
+      <Modal
       open={deleteModalOpen}
       onClose={handleDeleteModalClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
-    >
-      <Box sx={modalStyle}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Do you really want to delete {deletedCar.car} {deletedCar.car_model} (VIM: {deletedCar.car_vin})?
-        </Typography>
+      >
+        <Box sx={modalStyle}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Do you really want to delete {deletedCar.car} {deletedCar.car_model} (VIM: {deletedCar.car_vin})?
+          </Typography>
 
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            This action cannot be undone!
-        </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              This action cannot be undone!
+          </Typography>
 
-        <Stack direction="row" spacing={2}>
-          <Button type="submit" variant="contained">Delete</Button>
-          <Button type="button" variant="outlined" onClick={handleDeleteModalClose}>Cancel</Button>
-        </Stack>
-      </Box>
-    </Modal>
+          <Stack direction="row" spacing={2}>
+            <Button onClick={(event) => handleDeleteCarSubmit(event, deletedCar)} variant="contained">Delete</Button>
+            <Button type="button" variant="outlined" onClick={handleDeleteModalClose}>Cancel</Button>
+          </Stack>
+        </Box>
+      </Modal>
+    </>
   );
 }

@@ -1,5 +1,9 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import axios from "axios";
+import Snackbar from '@mui/material/Snackbar';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 const CarContext = createContext();
 
@@ -16,6 +20,9 @@ export function CarProvider({ children }) {
 
   const [editedCar, setEditedCar] = useState({});
   const [deletedCar, setDeletedCar] = useState({});
+
+  const [messageOpen, setMessageOpen] = useState(false);
+  const [messageText, setMessageText] = useState("");
 
   const handleEditModalOpen = () => setEditModalOpen(true);
   const handleEditModalClose = () => setEditModalOpen(false);
@@ -57,6 +64,18 @@ export function CarProvider({ children }) {
     event.preventDefault();
   };
 
+  const handleDeleteCarSubmit = (event, deletedCar) => {
+    event.preventDefault();
+
+    let newCars = cars.filter(car => car.id !== deletedCar.id);
+    setCars(newCars);
+    localStorage.setItem('cars', JSON.stringify(newCars));
+    setMessageText(`Car ${deletedCar.car} ${deletedCar.car_model} deleted`);
+    setMessageOpen(true);
+
+    handleDeleteModalClose();
+  };
+
   const handleAddCarSubmit = (event) => {
     event.preventDefault();
   };
@@ -71,6 +90,27 @@ export function CarProvider({ children }) {
         car.car_vin.includes(query)));
     }
   };
+
+  const handleMessageClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setMessageOpen(false);
+  };
+
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleMessageClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
 
   const carContextValue = {
     cars,
@@ -88,6 +128,7 @@ export function CarProvider({ children }) {
     handleDeleteModalOpen,
     handleDeleteModalClose,
     setDeletedCar,
+    handleDeleteCarSubmit,
     deleteModalOpen,
     deletedCar,
 
@@ -100,6 +141,14 @@ export function CarProvider({ children }) {
   return (
     <CarContext.Provider value={carContextValue}>
       {children}
+
+      <Snackbar
+        open={messageOpen}
+        autoHideDuration={3000}
+        onClose={handleMessageClose}
+        message={messageText}
+        action={action}
+      />
     </CarContext.Provider>
   );
 }
