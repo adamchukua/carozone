@@ -15,19 +15,19 @@ Page with list of cars with ability to change, delete, and add them. Also there 
 - Actions columns
 
 2. Actions column should contain dropdown with listed actions. Each option should open respected modal window.
-&nbsp; - Edit
-&nbsp; - Delete
+- Edit
+- Delete
 
 3. Edit modal should contain all data for selected car, but only some fields should be editable
-&nbsp; - Disabled:
-&nbsp; &nbsp; - Company
-&nbsp; &nbsp; - Model
-&nbsp; &nbsp; - VIN
-&nbsp; &nbsp; - Year
-&nbsp; - Enabled:
-&nbsp; &nbsp; - Color
-&nbsp; &nbsp; - Price
-&nbsp; &nbsp; - Availability
+- Disabled:
+  - Company
+  - Model
+  - VIN
+  - Year
+- Enabled:
+  - Color
+  - Price
+  - Availability
 
 4. Delete modal should contain question is user sure he wants to perform this action.
 
@@ -38,8 +38,8 @@ Page with list of cars with ability to change, delete, and add them. Also there 
 7. API to get initial data - https://documenter.getpostman.com/view/5596891/SW7eyRFV?version=latest#d10a962e-a3de-4c0e-9fda-7d472c20ba24
 
 8. Requirements to task:
-&nbsp; - 1 week to complete (5 working days)
-&nbsp; - Finished task should be presented in github
-&nbsp; - There should be accessible deployed version of the task to view it
-&nbsp; - Task could be done using Vanilla JS or React (React is preferred but not mandatory)
+- 1 week to complete (5 working days)
+- Finished task should be presented in github
+- There should be accessible deployed version of the task to view it
+- Task could be done using Vanilla JS or React (React is preferred but not mandatory)
 
