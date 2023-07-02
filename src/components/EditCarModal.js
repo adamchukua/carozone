@@ -24,8 +24,8 @@ const modalStyle = {
 };
 
 export default function EditCarModal() {
-  const { editModalOpen, editedCar, handleEditModalClose, handleCarChange, handleEditCarSubmit } = useCarContext();
-
+  const { editModalOpen, editedCar, handleEditModalClose, handleCarChange, handleEditCarSubmit, errors } = useCarContext();
+  
   return (
     <Modal
       open={editModalOpen}
@@ -45,6 +45,7 @@ export default function EditCarModal() {
                 label="Company"
                 value={editedCar.car}
                 onChange={handleCarChange}
+                required
                 disabled
               />
               <TextField
@@ -52,6 +53,7 @@ export default function EditCarModal() {
                 label="Model"
                 value={editedCar.car_model}
                 onChange={handleCarChange}
+                required
                 disabled
               />
               <TextField
@@ -59,6 +61,7 @@ export default function EditCarModal() {
                 label="VIN"
                 value={editedCar.car_vin}
                 onChange={handleCarChange}
+                required
                 disabled
               />
               <TextField
@@ -66,6 +69,7 @@ export default function EditCarModal() {
                 label="Year"
                 value={editedCar.car_model_year}
                 onChange={handleCarChange}
+                required
                 disabled
               />
               <TextField
@@ -73,12 +77,19 @@ export default function EditCarModal() {
                 label="Color"
                 value={editedCar.car_color}
                 onChange={handleCarChange}
+                required
+                error={errors.findIndex(error => error.field === "car_color") === -1 ? "" : "error"}
+                helperText={errors.find(error => error.field === "car_color")?.message}
               />
               <TextField
                 name="price"
                 label="Price"
-                value={editedCar.price}
+                value={editedCar.price || parseFloat(editedCar.price?.replace('$', ''))}
                 onChange={handleCarChange}
+                required
+                type="number"
+                error={errors.findIndex(error => error.field === "price") === -1 ? "" : "error"}
+                helperText={errors.find(error => error.field === "price")?.message}
               />
               <FormControl fullWidth>
                 <InputLabel>Availability</InputLabel>
@@ -86,6 +97,7 @@ export default function EditCarModal() {
                   name="availability"
                   onChange={handleCarChange}
                   label="Availability"
+                  required
                   defaultValue={editedCar.availability ? 1 : 0}
                 >
                   <MenuItem value={1}>In Stock</MenuItem>

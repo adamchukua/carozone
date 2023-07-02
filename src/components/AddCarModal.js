@@ -24,7 +24,7 @@ const modalStyle = {
 };
 
 export default function AddCarModal() {
-  const { addModalOpen, handleAddModalClose, handleAddCarSubmit, handleCarAdd } = useCarContext();
+  const { addModalOpen, handleAddModalClose, handleAddCarSubmit, handleCarAdd, errors } = useCarContext();
 
   return (
     <Modal
@@ -45,36 +45,50 @@ export default function AddCarModal() {
                 label="Company"
                 onChange={handleCarAdd}
                 required
+                error={errors.findIndex(error => error.field === "car") === -1 ? "" : "error"}
+                helperText={errors.find(error => error.field === "car")?.message}
               />
               <TextField
                 name="car_model"
                 label="Model"
                 onChange={handleCarAdd}
                 required
+                error={errors.findIndex(error => error.field === "car_model") === -1 ? "" : "error"}
+                helperText={errors.find(error => error.field === "car_model")?.message}
               />
               <TextField
                 name="car_vin"
                 label="VIN"
                 onChange={handleCarAdd}
                 required
+                error={errors.findIndex(error => error.field === "car_vin") === -1 ? "" : "error"}
+                helperText={errors.find(error => error.field === "car_vin")?.message}
               />
               <TextField
                 name="car_model_year"
                 label="Year"
                 onChange={handleCarAdd}
                 required
+                type="number"
+                error={errors.findIndex(error => error.field === "car_model_year") === -1 ? "" : "error"}
+                helperText={errors.find(error => error.field === "car_model_year")?.message}
               />
               <TextField
                 name="car_color"
                 label="Color"
                 onChange={handleCarAdd}
                 required
+                error={errors.findIndex(error => error.field === "car_color") === -1 ? "" : "error"}
+                helperText={errors.find(error => error.field === "car_color")?.message}
               />
               <TextField
                 name="price"
                 label="Price"
+                type="number"
                 onChange={handleCarAdd}
                 required
+                error={errors.findIndex(error => error.field === "price") === -1 ? "" : "error"}
+                helperText={errors.find(error => error.field === "price")?.message}
               />
               <FormControl fullWidth>
                 <InputLabel>Availability</InputLabel>

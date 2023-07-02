@@ -25,6 +25,8 @@ export function CarProvider({ children }) {
   const [messageOpen, setMessageOpen] = useState(false);
   const [messageText, setMessageText] = useState("");
 
+  const [errors, setErrors] = useState([]);
+
   const handleEditModalOpen = () => setEditModalOpen(true);
   const handleEditModalClose = () => setEditModalOpen(false);
   const handleDeleteModalOpen = () => setDeleteModalOpen(true);
@@ -55,22 +57,58 @@ export function CarProvider({ children }) {
 
   const handleCarChange = (event) => {
     const { name, value } = event.target;
+
     setEditedCar((prevCar) => ({
       ...prevCar,
       [name]: value,
     }));
+
+    validateCar(event);
   };
 
   const handleCarAdd = (event) => {
     const { name, value } = event.target;
+
     setAddedCar((newCar) => ({
       ...newCar,
       [name]: value,
     }));
+
+    validateCar(event);
+  };
+
+  const validateCar = (event) => {
+    const { name, value } = event.target;
+    const year = new Date().getFullYear();
+
+    setErrors(errors.filter(error => error.field !== name));
+
+    if (name === "car_vin" && cars.some(car => car.car_vin === value)) {
+      setErrors([...errors, { field: name, message: "VIN must be unique" }]);
+    }
+
+    if ((name === "car" || 
+         name === "car_model" || 
+         name === "car_vin" || 
+         name === "car_color") && value.length < 3) {
+      setErrors([...errors, { field: name, message: "The field length must have at lest 3 symbols" }]);
+    }
+
+    if (name === "car_model_year" && (parseInt(value) < 1900 || parseInt(value) >= year)) {
+      setErrors([...errors, { field: name, message: `Model year must be less than ${year} but bigger than 1900` }]);
+    }
+
+    if (name === "price" && value <= 0) {
+      setErrors([...errors, { field: name, message: "Price musn't be negative or 0" }]);
+    }
   };
 
   const handleAddCarSubmit = (event) => {
     event.preventDefault();
+
+    if (errors.length !== 0) {
+      return;
+    }
 
     setCars([addedCar, ...cars]);
     localStorage.setItem('cars', JSON.stringify([addedCar, ...cars]));
@@ -143,6 +181,7 @@ export function CarProvider({ children }) {
     cars,
     setCars,
     search,
+    errors,
 
     handleEditModalOpen,
     handleEditModalClose,
