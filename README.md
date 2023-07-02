@@ -5,14 +5,14 @@ Page with list of cars with ability to change, delete, and add them. Also there 
 ## Technical task
 
 1. The task is to develop the page that will contain table with cars list. Table should contain listed columns. Table should use pagination locally. Search on top of the table should work accross all entries, not only listed page.
-&nbsp; - Company
-&nbsp; - Model
-&nbsp; - VIN
-&nbsp; - Color
-&nbsp; - Year
-&nbsp; - Price
-&nbsp; - Availability
-&nbsp; - Actions columns
+- Company
+- Model
+- VIN
+- Color
+- Year
+- Price
+- Availability
+- Actions columns
 
 2. Actions column should contain dropdown with listed actions. Each option should open respected modal window.
 &nbsp; - Edit
