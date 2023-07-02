@@ -2,6 +2,13 @@
 
 Page with list of cars with ability to change, delete, and add them. Also there is a search as you type feature. Project built with React and MUI. 
 
+## How to start locally
+
+1. Open the direction where you want to place the project and run command ```git clone https://github.com/adamchukua/carozone```.
+2. Go to the project folder via command ```cd carozone```.
+3. Install needed dependecies with command ```npm ci```.
+4. Run the project, type ```npm start```.
+
 ## Technical task
 
 1. The task is to develop the page that will contain table with cars list. Table should contain listed columns. Table should use pagination locally. Search on top of the table should work accross all entries, not only listed page.
