@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+# Carozone
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Page with list of cars with ability to change, delete, and add them. Also there is a search as you type feature. Project built with React and MUI. 
 
-## Available Scripts
+## Technical task
 
-In the project directory, you can run:
+1. The task is to develop the page that will contain table with cars list. Table should contain listed columns. Table should use pagination locally. Search on top of the table should work accross all entries, not only listed page.
+&nbsp; - Company
+&nbsp; - Model
+&nbsp; - VIN
+&nbsp; - Color
+&nbsp; - Year
+&nbsp; - Price
+&nbsp; - Availability
+&nbsp; - Actions columns
 
-### `npm start`
+2. Actions column should contain dropdown with listed actions. Each option should open respected modal window.
+&nbsp; - Edit
+&nbsp; - Delete
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+3. Edit modal should contain all data for selected car, but only some fields should be editable
+&nbsp; - Disabled:
+&nbsp; &nbsp; - Company
+&nbsp; &nbsp; - Model
+&nbsp; &nbsp; - VIN
+&nbsp; &nbsp; - Year
+&nbsp; - Enabled:
+&nbsp; &nbsp; - Color
+&nbsp; &nbsp; - Price
+&nbsp; &nbsp; - Availability
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+4. Delete modal should contain question is user sure he wants to perform this action.
 
-### `npm test`
+5. Page should contain "Add car" button that opens add modal. Add modal should be similar to Edit modal, but all fields enabled and empty by default
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+6. All user actions should affect the table. Data should be saved between page reloads
 
-### `npm run build`
+7. API to get initial data - https://documenter.getpostman.com/view/5596891/SW7eyRFV?version=latest#d10a962e-a3de-4c0e-9fda-7d472c20ba24
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+8. Requirements to task:
+&nbsp; - 1 week to complete (5 working days)
+&nbsp; - Finished task should be presented in github
+&nbsp; - There should be accessible deployed version of the task to view it
+&nbsp; - Task could be done using Vanilla JS or React (React is preferred but not mandatory)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
