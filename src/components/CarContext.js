@@ -1,7 +1,6 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import axios from "axios";
 import Snackbar from '@mui/material/Snackbar';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -147,6 +146,7 @@ export function CarProvider({ children }) {
 
   const search = (query) => {
     const storedCars = localStorage.getItem('cars');
+    
     if (storedCars) {
       const parsedCars = JSON.parse(storedCars);
       setCars(parsedCars.filter(car => 
